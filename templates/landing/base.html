@@ -1,0 +1,96 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<title>W3.CSS Template</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="https://st.mafiaonline.ru/css/forum.3.0.css?039">
+<link rel="stylesheet" type="text/css" href="{% static 'tm.css' %}">
+<style>
+
+</style>
+<body>
+
+<!-- Navbar -->
+<div class="w3-top">
+  <div class="w3-bar w3-card w3-left-align w3-large panel panel-default" >
+    <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large panel panel-default" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+    <a href="{% url 'tm_calendar' year=2019 month=12 %}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Календарь турниров</a>
+    <a href="{% url 'tm_FP' %}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Нормы FP</a>
+    <a href="{% url 'tm_roster' %}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Состав ТМ</a>
+    <a href="{% url 'tm_tournaments_list' %}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Турниры</a>
+    <a href="{% url 'tm_rating' %}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Турнирный рейтинг</a>
+    {% if user.is_authenticated %}
+        <a href="{% url 'profile' %}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Профиль</a>
+        <a href="{% url 'logout' %}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Выход</a>
+    {% else %}
+        <a href="{% url 'register' %}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Регистрация</a>
+        <a href="{% url 'login' %}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Вход</a>
+    {% endif %}
+
+
+  </div>
+
+  <!-- Navbar on small screens -->
+  <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
+    <a href="{% url 'tm_calendar' year=2019 month=12 %}" class="w3-bar-item w3-button w3-padding-large">Календарь турниров</a>
+    <a href="{% url 'tm_FP'  %}" class="w3-bar-item w3-button w3-padding-large">Нормы FP</a>
+    <a href="{% url 'tm_roster'  %}" class="w3-bar-item w3-button w3-padding-large">Состав ТМ</a>
+    <a href="{% url 'tm_tournaments_list'  %}" class="w3-bar-item w3-button w3-padding-large">Турниры</a>
+    <a href="{% url 'tm_rating'  %}" class="w3-bar-item w3-button w3-padding-large">Турнирный рейтинг</a>
+      {% if user.is_authenticated %}
+        <a href="{% url 'profile'  %}" class="w3-bar-item w3-button w3-padding-large">Профиль</a>
+        <a href="{% url 'logout'  %}" class="w3-bar-item w3-button w3-padding-large">Выход</a>
+      {% else %}
+        <a href="{% url 'register'  %}" class="w3-bar-item w3-button w3-padding-large">Регистрация</a>
+        <a href="{% url 'login'  %}" class="w3-bar-item w3-button w3-padding-large">Вход</a>
+      {% endif %}
+  </div>
+</div>
+
+<!-- Header -->
+<header class="w3-container panel panel-default w3-center text_container">
+  <h1 class="w3-margin w3-jumbo">{% block title %}{% endblock %}</h1>
+</header>
+<div class="w3-container  w3-center" style="padding:12px 16px"> </div>
+<div class="col-md-8">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}"> {{ message }}</div>
+        {% endfor %}
+    {% endif %}
+</div>
+<main role="main" class="w3-container margin_block panel panel-default text_container"  >
+
+        {% block content %}{% endblock %}
+</main><!-- /.container -->
+
+<!-- Footer -->
+<footer class="w3-container w3-padding-64 w3-center w3-opacity panel panel-default">
+  <div class="w3-xlarge w3-padding-32">
+    <a href="http://fb.com/mafiaonline.ru" class="fa fa-facebook-official w3-hover-opacity" title="http://fb.com/mafiaonline.ru" target="_blank"></a>
+    <a href="https://instagram.com/mafiaonline.ru" class="fa fa-instagram w3-hover-opacity" target="_blank"></a>
+    <a href="https://twitter.com/mafiaonline_ru" class="fa fa-twitter w3-hover-opacity" title="https://twitter.com/mafiaonline_ru" target="_blank"></a>
+    <a href="https://telegram.me/mafiaonline" class="fa fa-telegram w3-hover-opacity" target="_blank" ></a>
+ </div>
+ <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a> and <a href="https://www.mafiaonline.ru/info/Evil%20bob" target="_blank">Evil bob</a></p>
+</footer>
+
+<script>
+// Used to toggle the menu on small screens when clicking on the menu button
+function myFunction() {
+  var x = document.getElementById("navDemo");
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+</script>
+
+</body>
+</html>

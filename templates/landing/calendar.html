@@ -1,0 +1,10 @@
+{% extends 'landing/base.html' %}
+{% block title %}
+ fafa
+{% endblock %}
+
+{% block content %}
+    {% for day in m_range %}
+        <div onselectstart="return false" class="calendar_row this_month numberCircle">{{ day }}</div>
+    {% endfor %}
+{% endblock %}

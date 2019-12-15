@@ -1,0 +1,11 @@
+{% extends 'landing/base.html' %}
+{% block title %}
+    TM page
+{% endblock %}
+
+{% block content %}
+    {% for tournament in tournaments %}
+        <div><img src="{{ tournament.preview_image.url }}" alt="{{ tournament.preview_image.url }}"/></div>
+        <h3><a href="{% url 'tournament' tournament.id %}">{{ tournament.name }}</a></h3>
+    {% endfor %}
+{% endblock %}
