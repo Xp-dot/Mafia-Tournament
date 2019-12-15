@@ -39,7 +39,7 @@ background: linear-gradient(315deg, rgba(108,101,232,0.9753035003063726) 0%, rgb
     border: 2px solid red;
     background: yellow;
 }
-.calendar_row {
+.row {
   margin: 20px 0;
   /*float: left; Remove this*/
   display: inline-block; /*Add this*/

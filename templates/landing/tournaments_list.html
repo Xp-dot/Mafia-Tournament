@@ -5,7 +5,7 @@
 
 {% block content %}
     {% for tournament in tournaments %}
-        <div class="tournament_box"><img src="{{ tournament.preview_image.url }}" alt="{{ tournament.preview_image.url }}" href="{% url 'tournament' tournament.id %}"/>
+        <div class="tournament_box row"><img src="{{ tournament.preview_image.url }}" alt="{{ tournament.preview_image.url }}" href="{% url 'tournament' tournament.id %}"/>
         <a href="{% url 'tournament' tournament.id %}">{{ tournament.name }}</a>
         </div>
     {% endfor %}
