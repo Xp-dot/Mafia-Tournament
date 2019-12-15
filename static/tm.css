@@ -6,8 +6,11 @@ a:hover, a:visited, a:link, a:active
     text-decoration: none;
 }
 div > img {
-    width: 240px;
-    height: 145px;
+    display: block;
+    max-width:250px;
+    max-height:145px;
+    width: auto;
+    height: auto;
     border-radius: 10px;
 }
 
