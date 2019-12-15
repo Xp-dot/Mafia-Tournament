@@ -13,9 +13,9 @@ class Tournament(models.Model):
 
 class Team(models.Model):
     THEME_CHOICES = (
-        ('1 ', '1 лига'),
-        ('2', '2 лига'),
-        ('3', '3 лига'),
+        ('Высшая лига', 'Высшая лига'),
+        ('Вторая лига', '2 лига'),
+        ('Третья лига', '3 лига'),
     )
     creation_date = models.DateTimeField("",auto_now_add=True,blank=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
