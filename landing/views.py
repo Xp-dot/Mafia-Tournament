@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Tournament
+from .models import Tournament, Team
 from calendar import monthrange
 from .forms import UserForm
 
@@ -38,6 +38,12 @@ def tm_list(request):
     }
     return render(request, "landing/tournaments_list.html", context)
 
+def team_list(request):
+    teams = Team.objects.all()
+    context = {
+        'teams': teams
+    }
+    return render(request, "landing/teams_list.html", context)
 
 def rating(request):
     return render(request, "landing/rating.html", locals())

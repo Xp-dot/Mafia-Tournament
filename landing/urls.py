@@ -23,6 +23,7 @@ urlpatterns = [
     path("tm_FP", views.fp, name="tm_FP"),
     path("tm_roster", views.rooster, name="tm_roster"),
     path("tm_tournaments_list", views.tm_list, name="tm_tournaments_list"),
+    path("tm_teams", views.team_list, name="tm_teams"),
     path("tm_rating", views.rating, name="tm_rating"),
     path('tournament/<tournament_id>', views.show_tournament, name='tournament')
 ]
