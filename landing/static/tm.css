@@ -47,11 +47,6 @@ background: linear-gradient(315deg, rgba(108,101,232,0.9753035003063726) 0%, rgb
 
 .text_container
 {
-    margin-left:50px;
-    margin-right:50px;
-    margin-bottom:50px;
-    padding:40px 16px;
-    border-radius: 10px;
 }
 
 .tournament_box

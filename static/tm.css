@@ -49,8 +49,7 @@ background: linear-gradient(315deg, rgba(108,101,232,0.9753035003063726) 0%, rgb
 {
     margin-left:50px;
     margin-right:50px;
-    margin-bottom:50px;
-    padding:40px 16px;
+    margin-bottom:5px;
     border-radius: 10px;
 }
 
@@ -68,6 +67,12 @@ background: linear-gradient(315deg, rgba(108,101,232,0.9753035003063726) 0%, rgb
    -webkit-text-stroke-width: 2px;
    -webkit-text-stroke-color: black;
     font-size: 24px;
+    color: silver;
+}
+
+.footer_ico
+{
+    font-size: 50px;
     color: silver;
 }
 .tm_trophy_gold
