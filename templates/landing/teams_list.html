@@ -23,7 +23,13 @@
             <td>{{ team.owner.username }}</td>
             <td> {{ team.creation_date}} </td>
             <td> -- </td>
-            <td> {% for usr in team.userprofile_set.all %} {{ usr.user.username }} {% endfor %}</td>
+            <td>
+            {% if team.userprofile_set.all %}
+                {% for usr in team.userprofile_set.all %}
+                    {{ usr.user.username }}<br>
+                {% endfor %}
+            {% endif %}
+            </td>
             <td>
               {% if user.is_authenticated %}  <button type="submit">Подать заявку</button> {% endif %}
             </td>
