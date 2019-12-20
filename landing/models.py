@@ -11,6 +11,12 @@ class Tournament(models.Model):
     def __str__(self):
         return self.name
 
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.username
+
 class Team(models.Model):
     THEME_CHOICES = (
         ('Высшая лига', 'Высшая лига'),
@@ -18,7 +24,7 @@ class Team(models.Model):
         ('Третья лига', '3 лига'),
     )
     creation_date = models.DateTimeField("",auto_now_add=True,blank=True)
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='owner')
     league = models.CharField(max_length=20, choices=THEME_CHOICES, unique=True)
     name = models.CharField(max_length=256)
     description = models.TextField()
@@ -26,3 +32,10 @@ class Team(models.Model):
 
     def __str__(self):
         return self.name
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    def __str__(self):
+        return self.user.username

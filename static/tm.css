@@ -28,21 +28,6 @@ div > img {
     -webkit-touch-callout: none; /* Disable Android and iOS callouts*/
 }
 
-th {
-  font-weight: normal;
-  border-bottom: 2px solid #6678b1;
-  border-right: 30px solid transparent;
-  border-left: 30px solid transparent;
-  color: #039;
-  padding: 8px 2px;
-}
-td {
-  border-right: 30px solid transparent;
-  border-left: 30px solid transparent;
-  color: #669;
-  padding: 12px 2px;
-}
-
 .prev_month {
     border: 2px solid red;
     background: darkslategrey;
@@ -53,15 +38,9 @@ td {
 background: linear-gradient(315deg, rgba(108,101,232,0.9753035003063726) 0%, rgba(9,90,121,0.9192810913427871) 35%, rgba(0,212,255,1) 100%);
 
 }
-.tournament {
-    border: 2px solid red;
-    background: yellow;
+.tournament { border: 2px solid red; background: yellow;
 }
-.row {
-  margin: 20px 0;
-  /*float: left; Remove this*/
-  display: inline-block; /*Add this*/
-}
+
 
 .text_container
 {
@@ -80,23 +59,13 @@ background: linear-gradient(315deg, rgba(108,101,232,0.9753035003063726) 0%, rgb
     margin-left:  auto;
 }
 
-.tm_trophy_silver
-{
-   -webkit-text-stroke-width: 2px;
-   -webkit-text-stroke-color: black;
-    font-size: 24px;
-    color: silver;
-}
 
-.footer_ico
-{
-    font-size: 50px;
-    color: silver;
-}
-.tm_trophy_gold
+.footer_ico {font-size: 50px;}
+.tm-trophy
 {
    -webkit-text-stroke-width: 2px;
    -webkit-text-stroke-color: black;
     font-size: 24px;
-    color: gold;
 }
+.tm-trophy-gold {@include .tm-trophy; color: gold;}
+.tm-trophy-silver {@include .tm-trophy; color: silver;}

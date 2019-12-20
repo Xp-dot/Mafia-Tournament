@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Tournament, Team
+from .models import Tournament, Team, UserProfile
 from calendar import monthrange
 from .forms import UserForm
 
@@ -19,7 +19,7 @@ def show_tournament(request, tournament_id):
 
 def calendar(request, year, month):
     tournaments = Tournament.objects.all()
-    m_range = range(1,  monthrange(year, month)[1]+1)
+    m_range = {'year': year, 'month':month}
     return render(request, "landing/calendar.html", {"m_range":m_range})
 
 
