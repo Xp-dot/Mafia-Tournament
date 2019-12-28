@@ -22,7 +22,7 @@
             <td> {% if player.team %} {{ player.team }} {% else %} Без команды {% endif %}</td>
             <td>
             {% for ot in owned_teams %}
-                {% if player.access <= ot.league and player.team is not ot %}
+                {% if player.access <= ot.league and player.team != ot %}
                     <form action="{% url 'contract' %}" method="post">
                         {% csrf_token %}
                         <button class="btn btn-primary" type="submit">Пригласить в команду {{ ot.name }}</button>
