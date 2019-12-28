@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Tournament, Team, UserProfile
-from calendar import monthrange
-from .forms import UserForm
+from .models import Tournament
+from team_interactions.models import Team
+from users.models import UserProfile
 
 # Create your views here.
 def landing(request):
@@ -44,6 +44,14 @@ def team_list(request):
         'teams': teams
     }
     return render(request, "landing/teams_list.html", context)
+
+def players_list(request):
+    players = UserProfile.objects.exclude(user=request.user)
+    owned_teams = Team.objects.filter(owner=request.user)
+    context = {
+        'players': players, 'owned_teams' : owned_teams
+    }
+    return render(request, "landing/players_list.html", context)
 
 def rating(request):
     return render(request, "landing/rating.html", locals())

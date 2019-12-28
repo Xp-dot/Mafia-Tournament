@@ -1,0 +1,46 @@
+{% extends 'landing/base.html' %}
+{% block title %}
+    Мои контракты
+{% endblock %}
+{% block content %}
+    <table class="table table-striped">
+    <thead>
+        <tr>  <td colspan="100%" style="text-align: center; background-color: cornflowerblue"> Ваши заявки на прием в команду </td>  </tr>
+        <tr>
+            <th>Команда</th>
+            <th>Лига</th>
+            <th>Владелец</th>
+            <th>Длительность</th>
+            <th>Зарплата</th>
+            <th>Стоимость контракта</th>
+            <th>Статус контракта</th>
+            <th>Отменить/расторгнуть контракт</th>
+        </tr>
+    </thead>
+    {% for contract in team_enroll_contract %}
+        <tr>
+            <td> {{contract.team.name}} </td>
+            <td> {{contract.team.league}} </td>
+            <td> {{contract.team_owner}} </td>
+            <td> {{contract.duration}} </td>
+            <td> {{contract.salary}} </td>
+            <td> {{contract.contract_value}} </td>
+            <td> {{contract.get_contract_status_display}} </td>
+            <td> -- </td>
+        </tr>
+    {% endfor %}
+    <tr>  <td colspan="100%" style="text-align: center; background-color: cornflowerblue"> Заявки на прием в вашу команду </td>  </tr>
+    {% for contract in team_request_contract %}
+        <tr>
+            <td> {{contract.team.name}} </td>
+            <td> {{contract.team.league}} </td>
+            <td> {{contract.team_owner}} </td>
+            <td> {{contract.duration}} </td>
+            <td> {{contract.salary}} </td>
+            <td> {{contract.contract_value}} </td>
+            <td> {{contract.get_contract_status_display}} </td>
+            <td> -- </td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock %}

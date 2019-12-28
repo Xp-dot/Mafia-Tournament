@@ -1,0 +1,40 @@
+{% extends 'landing/base.html' %}
+{% block title %}
+    Список команд
+{% endblock %}
+
+{% block content %}
+    <table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Игрок</th>
+            <th>Допуск</th>
+            <th>В команде</th>
+            <th>Команда</th>
+            <th>Пригласить в команду</th>
+        </tr>
+    </thead>
+    {% for player in players %}
+        <tr>
+            <td>{{ player.user.username }}</td>
+            <td>{{ player.access }}</td>
+            <td> {% if player.in_team %} Да {% else %} Нет {% endif %}</td>
+            <td> {% if player.team %} {{ player.team }} {% else %} Без команды {% endif %}</td>
+            <td>
+            {% for ot in owned_teams %}
+                {% if player.access <= ot.league %}
+                    <form action="{% url 'contract' %}" method="post">
+                        {% csrf_token %}
+                        <button class="btn btn-primary" type="submit">Пригласить в команду {{ ot.name }}</button>
+                        <input type="hidden" name="player" value="{{player.user.id}}" />
+                        <input type="hidden" name="team_owner" value="{{user.id}}" />
+                        <input type="hidden" name="team" value="{{ot.id}}" />
+                    </form>
+                {% endif %}
+                <br>
+            {% endfor %}
+            </td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock %}

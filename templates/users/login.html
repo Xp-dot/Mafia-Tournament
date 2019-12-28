@@ -1,21 +1,28 @@
 {% extends 'landing/base.html' %}
+{% load crispy_forms_tags %}
 {% block title %}
     Вход
 {% endblock %}
 {% block content %}
         <div class="content-section">
-                <form method="post">
-                    {% csrf_token %}
-                    <fieldset class="form-group">
-                        <legend class="border-bottom mb-4"> Войти</legend>
-                        {{ form.as_p }}
-                    </fieldset>
-                    <div class="form-group">
-                        <button class="btn btn-outline-info" type="submit"> Войти</button>
-                    </div>
-                </form>
-            <div class="border-top pt-3">
-                <small>Еще не с нами?<a class="ml-2" href="{% url 'register' %}">Зарегистритуйтесь</a></small>
+            <div class="row">
+                <div class="col-3"></div>
+                <div class="col-6">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <legend class="border-bottom mb-4"> Войти</legend>
+                            {{ form|crispy }}
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-primary" type="submit"> Войти</button>
+                        </div>
+                    </form>
+                <div class="border-top pt-3">
+                    <small>Еще не с нами?<a class="ml-2" href="{% url 'register' %}">Зарегистритуйтесь</a></small>
+                </div>
+                </div>
+                <div class="col-3"></div>
             </div>
         </div>
 {% endblock %}

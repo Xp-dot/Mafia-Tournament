@@ -17,6 +17,11 @@ from django.contrib import admin
 from django.urls import path
 from . import views
 
+
+from django.contrib import admin
+from django.urls import path
+from . import views
+
 urlpatterns = [
     path('', views.landing, name="landing"),
     path('tm_calendar/<int:year>/<int:month>', views.calendar, name="tm_calendar"),
@@ -24,6 +29,8 @@ urlpatterns = [
     path("tm_roster", views.rooster, name="tm_roster"),
     path("tm_tournaments_list", views.tm_list, name="tm_tournaments_list"),
     path("tm_teams", views.team_list, name="tm_teams"),
+    path("tm_players", views.players_list, name="tm_players"),
     path("tm_rating", views.rating, name="tm_rating"),
     path('tournament/<tournament_id>', views.show_tournament, name='tournament')
 ]
+

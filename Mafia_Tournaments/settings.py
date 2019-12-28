@@ -25,7 +25,7 @@ SECRET_KEY = ')chx!%xvqrd3y@0vtk!-nfz9fue5&r7v@=wyugan&-p=x6p_jz'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['mafiatm.pythonanywhere.com']
+ALLOWED_HOSTS = ['mafiatm.pythonanywhere.com', '127.0.0.1']
 
 
 # Application definition
@@ -37,7 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
     'landing',
+    'team_interactions',
     'users'
 ]
 
@@ -72,6 +74,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Mafia_Tournaments.wsgi.application'
 
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases

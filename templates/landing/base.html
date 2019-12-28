@@ -7,16 +7,16 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" href="https://st.mafiaonline.ru/css/forum.3.0.css?039">
-<link rel="stylesheet" type="text/css" href="{% static 'tm.css' %}">
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
-<style>
-
-</style>
+<link rel="stylesheet" type="text/css" href="{% static 'tm.css' %}">
+{% block scripts %}
+{% endblock %}
 <body>
 {% now 'Y' as current_year %}
 {% now 'm' as current_month %}
+
 <!-- Navbar -->
 {% block navbar %}
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -26,30 +26,45 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
-        <li class="nav-item active">
-            <a class="nav-link" href="{% url 'tm_calendar' current_year current_month %}">Календарь турниров<span class="sr-only">(current)</span></a>
-        </li>
         <li class="nav-item">
-            <a class="nav-link" href="{% url 'tm_FP' %}">Нормы FP</a>
+            <a class="nav-link" href="{% url 'tm_FP' %}">Нормы FP<span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="{% url 'tm_roster' %}">Состав ТМ</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'tm_tournaments_list' %}">Турниры</a>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Турниры
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{% url 'tm_tournaments_list' %}">Турниры</a>
+              <a class="dropdown-item" href="{% url 'tm_rating' %}">Турнирный рейтинг</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="{% url 'tm_calendar' current_year current_month %}">Календарь турниров</a>
+            </div>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'tm_rating' %}">Турнирный рейтинг</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'tm_teams' %}">Команды</a>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Команды
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{% url 'tm_teams' %}">Список команд</a>
+              <a class="dropdown-item" href="{% url 'tm_players' %}">Список игроков</a>
+            </div>
         </li>
         {% if user.is_authenticated %}
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'profile' %}">Профиль</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'logout' %}">Выход</a>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Профиль
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="{% url 'profile' %}">Профиль</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="{% url 'team_management' %}">Управление командами</a>
+                  <a class="dropdown-item" href="{% url 'my_team' %}">Моя команда</a>
+                  <a class="dropdown-item" href="{% url 'my_contracts' %}">Мои контракты</a>
+                  <a class="dropdown-item" href="{% url 'logout' %}">Выход</a>
+                </div>
             </li>
         {% else %}
             <li class="nav-item">
@@ -80,13 +95,19 @@
 
 <!-- Footer -->
 <footer class="panel text_container">
-  <div class="">
+  <div class="row justify-content-center">
     <a href="http://fb.com/mafiaonline.ru" class="footer_ico fa fa-facebook-official" title="http://fb.com/mafiaonline.ru" target="_blank"></a>
     <a href="https://instagram.com/mafiaonline.ru" class="footer_ico fa fa-instagram" target="_blank"></a>
     <a href="https://twitter.com/mafiaonline_ru" class="footer_ico fa fa-twitter" title="https://twitter.com/mafiaonline_ru" target="_blank"></a>
-    <a href="https://telegram.me/mafiaonline" class="footer_ico fa fa-telegram" target="_blank" ></a>
+    <a href="https://telegram.me/mafiaonline" class="footer_ico fa fa-telegram" target="_blank" ></a><br>
  </div>
- <p>Powered by <a href="https://www.mafiaonline.ru/info/Evil%20bob" target="_blank">Evil bob</a></p>
+    <div class="row justify-content-center">
+        <p>Powered by
+            <a href="https://getbootstrap.com/" target="_blank">Bootstrap</a>,
+            <a href="https://www.djangoproject.com/" target="_blank">Django</a> and
+            <a href="https://www.mafiaonline.ru/info/Evil%20bob" target="_blank">Evil bob</a></p>
+    </div>
+
 </footer>
 </body>
 </html>

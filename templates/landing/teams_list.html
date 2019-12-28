@@ -31,7 +31,15 @@
             {% endif %}
             </td>
             <td>
-              {% if user.is_authenticated %}  <button type="submit">Подать заявку</button> {% endif %}
+              {% if user.is_authenticated and not user.userprofile.in_team and user.userprofile.access <= team.league %}
+                <form action="{% url 'contract' %}" method="post">
+                    {% csrf_token %}
+                    <button class="btn btn-primary" type="submit">Подать заявку</button>
+                    <input type="hidden" name="player" value="{{user.id}}" />
+                    <input type="hidden" name="team_owner" value="{{team.owner.id}}" />
+                    <input type="hidden" name="team" value="{{team.id}}" />
+                </form>
+              {% endif %}
             </td>
         </tr>
     {% endfor %}
