@@ -37,7 +37,20 @@ def my_contracts(request):
             team_enroll.filter(id=contract_id).update(contract_status=new_value)
         elif request.POST.get('incoming'):
             new_value = request.POST.get('incoming')
-            team_request.filter(id=contract_id).update(contract_status=new_value)
+            if new_value == '2':
+                for contr in team_request:
+                    if contr.id == int(contract_id):
+                        #Player Enroll Team
+                        contr.contract_status=int(new_value)
+                        contr.player.userprofile.in_team = True
+                        contr.player.userprofile.team = contr.team
+                        contr.player.userprofile.save()
+                        contr.save()
+                    elif contr.contract_status == 1:
+                        contr.contract_status = 3
+                        contr.save()
+            else:
+                team_request.filter(id=contract_id).update(contract_status=new_value)
     context = {'team_enroll_contract': team_enroll, 'team_request_contract': team_request}
     return render(request, 'users/profile_my_contracts.html', context)
 
