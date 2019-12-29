@@ -31,3 +31,7 @@ class Contract(models.Model):
     def __str__(self):
         return self.player.username
 
+    def change_status(self, new_status):
+        self.contract_status = new_status
+        self.save()
+        pass

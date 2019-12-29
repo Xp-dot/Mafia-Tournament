@@ -21,7 +21,7 @@
             <td> {% if player.in_team %} Да {% else %} Нет {% endif %}</td>
             <td> {% if player.team %} {{ player.team }} {% else %} Без команды {% endif %}</td>
             <td>
-            {% if user.is_authenticated %}
+            {% if user.is_authenticated and not player.in_team %}
                 {% for ot in owned_teams %}
                     {% if player.access <= ot.league and player.team != ot %}
                         <form action="{% url 'contract' %}" method="post">

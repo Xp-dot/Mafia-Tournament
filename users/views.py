@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm
-from team_interactions.models import *
+from team_interactions.contract_utils import *
 
 # Create your views here.
 def register(request):
@@ -10,8 +10,6 @@ def register(request):
         form = UserRegisterForm(request.POST)
         if form.is_valid():
             form.save()
-            username = form.cleaned_data.get('username')
-            messages.success(request, f'Account was created!')
             return redirect('login')
     else:
         form = UserRegisterForm()
@@ -28,30 +26,14 @@ def team_management(request):
 
 @login_required
 def my_contracts(request):
-    team_enroll = Contract.objects.filter(player=request.user)
-    team_request = Contract.objects.filter(team_owner=request.user)
+    outcome_contracts = Contract.objects.filter(player=request.user)
+    income_contracts = Contract.objects.filter(team_owner=request.user)
     if request.method == 'POST':
-        contract_id = request.POST.get('contract')
         if request.POST.get('outgoing'):
-            new_value = request.POST.get('outgoing')
-            team_enroll.filter(id=contract_id).update(contract_status=new_value)
+            process_outcome_contract_request(request, outcome_contracts)
         elif request.POST.get('incoming'):
-            new_value = request.POST.get('incoming')
-            if new_value == '2':
-                for contr in team_request:
-                    if contr.id == int(contract_id):
-                        #Player Enroll Team
-                        contr.contract_status=int(new_value)
-                        contr.player.userprofile.in_team = True
-                        contr.player.userprofile.team = contr.team
-                        contr.player.userprofile.save()
-                        contr.save()
-                    elif contr.contract_status == 1:
-                        contr.contract_status = 3
-                        contr.save()
-            else:
-                team_request.filter(id=contract_id).update(contract_status=new_value)
-    context = {'team_enroll_contract': team_enroll, 'team_request_contract': team_request}
+            process_income_contract_request(request, income_contracts)
+    context = {'team_enroll_contract': outcome_contracts, 'team_request_contract': income_contracts}
     return render(request, 'users/profile_my_contracts.html', context)
 
 @login_required
