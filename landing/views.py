@@ -46,8 +46,12 @@ def team_list(request):
     return render(request, "landing/teams_list.html", context)
 
 def players_list(request):
-    players = UserProfile.objects.exclude(user=request.user)
-    owned_teams = Team.objects.filter(owner=request.user)
+    if request.user.is_authenticated:
+        players = UserProfile.objects.exclude(user=request.user)
+        owned_teams = Team.objects.filter(owner=request.user)
+    else:
+        players = UserProfile.objects.all()
+        owned_teams = {}
     context = {
         'players': players, 'owned_teams' : owned_teams
     }

@@ -30,6 +30,14 @@ def team_management(request):
 def my_contracts(request):
     team_enroll = Contract.objects.filter(player=request.user)
     team_request = Contract.objects.filter(team_owner=request.user)
+    if request.method == 'POST':
+        contract_id = request.POST.get('contract')
+        if request.POST.get('outgoing'):
+            new_value = request.POST.get('outgoing')
+            team_enroll.filter(id=contract_id).update(contract_status=new_value)
+        elif request.POST.get('incoming'):
+            new_value = request.POST.get('incoming')
+            team_request.filter(id=contract_id).update(contract_status=new_value)
     context = {'team_enroll_contract': team_enroll, 'team_request_contract': team_request}
     return render(request, 'users/profile_my_contracts.html', context)
 

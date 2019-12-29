@@ -10,7 +10,7 @@ def get_contract(request):
         form = ContractForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('profile')
+            return redirect('my_contracts')
         else:
             print('form is not valid')
             print(form.errors)

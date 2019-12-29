@@ -14,7 +14,7 @@
             <th>Зарплата</th>
             <th>Стоимость контракта</th>
             <th>Статус контракта</th>
-            <th>Отменить/расторгнуть контракт</th>
+            <th>Управление контрактом</th>
         </tr>
     </thead>
     {% for contract in team_enroll_contract %}
@@ -26,20 +26,63 @@
             <td> {{contract.salary}} </td>
             <td> {{contract.contract_value}} </td>
             <td> {{contract.get_contract_status_display}} </td>
-            <td> -- </td>
+            <td>
+                {% if contract.contract_status == 1 %}
+                    <form method="post">
+                        {% csrf_token %}
+                        <button class="btn btn-primary" name="outgoing" type="submit" value="3">Отклонить</button>
+                        <input type="hidden" name="contract" value="{{contract.id}}" />
+                    </form>
+                {% elif contract.contract_status == 2 %}
+                    <form method="post">
+                        {% csrf_token %}
+                        <button class="btn btn-primary" name="outgoing" type="submit" value="5">Расторгнуть</button>
+                        <input type="hidden" name="contract" value="{{contract.id}}" />
+                    </form>
+                {% endif %}
+            </td>
         </tr>
     {% endfor %}
-    <tr>  <td colspan="100%" style="text-align: center; background-color: cornflowerblue"> Заявки на прием в вашу команду </td>  </tr>
+    </table>
+    <table class="table table-striped">
+    <thead>
+        <tr>  <td colspan="100%" style="text-align: center; background-color: cornflowerblue"> Заявки на прием в вашу команду </td>  </tr>
+        <tr>
+            <th>Команда</th>
+            <th>Лига</th>
+            <th>Игрок</th>
+            <th>Длительность</th>
+            <th>Зарплата</th>
+            <th>Стоимость контракта</th>
+            <th>Статус контракта</th>
+            <th>Управление контрактом</th>
+        </tr>
+    </thead>
     {% for contract in team_request_contract %}
         <tr>
             <td> {{contract.team.name}} </td>
             <td> {{contract.team.league}} </td>
-            <td> {{contract.team_owner}} </td>
+            <td> {{contract.player.username}} </td>
             <td> {{contract.duration}} </td>
             <td> {{contract.salary}} </td>
             <td> {{contract.contract_value}} </td>
             <td> {{contract.get_contract_status_display}} </td>
-            <td> -- </td>
+            <td>
+                {% if contract.contract_status == 1 %}
+                    <form method="post">
+                        {% csrf_token %}
+                        <button class="btn btn-primary" name="incoming" type="submit" value="2">Принять</button>
+                        <button class="btn btn-primary" name="incoming" type="submit" value="3">Отклонить</button>
+                        <input type="hidden" name="contract" value="{{contract.id}}" />
+                    </form>
+                {% elif contract.contract_status == 2 %}
+                    <form method="post">
+                        {% csrf_token %}
+                        <button class="btn btn-primary" name="incoming" type="submit" value="5">Расторгнуть</button>
+                        <input type="hidden" name="contract" value="{{contract.id}}" />
+                    </form>
+                {% endif %}
+            </td>
         </tr>
     {% endfor %}
     </table>
