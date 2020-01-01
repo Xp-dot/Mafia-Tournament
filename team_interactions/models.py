@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
 
 # Create your models here.
 class Team(models.Model):
@@ -51,3 +52,11 @@ class Contract(models.Model):
             return [(4,'Отклонить')]
         elif self.contract_status == 3:
             return [(6,'Расторгнуть(игр)')]
+
+    @staticmethod
+    def post_save(sender, **kwargs):
+        instance = kwargs.get('instance')
+        if instance.contract_status == 7:
+            instance.player.userprofile.revoke_contract()
+
+post_save.connect(Contract.post_save, sender=Contract)
