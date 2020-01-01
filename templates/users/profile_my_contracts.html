@@ -27,19 +27,13 @@
             <td> {{contract.contract_value}} </td>
             <td> {{contract.get_contract_status_display}} </td>
             <td>
-                {% if contract.contract_status == 1 %}
-                    <form method="post">
-                        {% csrf_token %}
-                        <button class="btn btn-primary" name="outgoing" type="submit" value="3">Отклонить</button>
-                        <input type="hidden" name="contract" value="{{contract.id}}" />
-                    </form>
-                {% elif contract.contract_status == 2 %}
-                    <form method="post">
-                        {% csrf_token %}
-                        <button class="btn btn-primary" name="outgoing" type="submit" value="5">Расторгнуть</button>
-                        <input type="hidden" name="contract" value="{{contract.id}}" />
-                    </form>
-                {% endif %}
+                <form method="post">
+                    {% csrf_token %}
+                    {% for transition in contract.get_outcome_transitions %}
+                        <button class="btn btn-primary" name="outgoing" type="submit" value="{{ transition.0 }}"> {{transition.1}} </button>
+                    {% endfor %}
+                    <input type="hidden" name="contract" value="{{contract.id}}" />
+                </form>
             </td>
         </tr>
     {% endfor %}
@@ -68,20 +62,13 @@
             <td> {{contract.contract_value}} </td>
             <td> {{contract.get_contract_status_display}} </td>
             <td>
-                {% if contract.contract_status == 1 %}
-                    <form method="post">
-                        {% csrf_token %}
-                        <button class="btn btn-primary" name="incoming" type="submit" value="2">Принять</button>
-                        <button class="btn btn-primary" name="incoming" type="submit" value="3">Отклонить</button>
-                        <input type="hidden" name="contract" value="{{contract.id}}" />
-                    </form>
-                {% elif contract.contract_status == 2 %}
-                    <form method="post">
-                        {% csrf_token %}
-                        <button class="btn btn-primary" name="incoming" type="submit" value="5">Расторгнуть</button>
-                        <input type="hidden" name="contract" value="{{contract.id}}" />
-                    </form>
-                {% endif %}
+                <form method="post">
+                    {% csrf_token %}
+                    {% for transition in contract.get_income_transitions %}
+                        <button class="btn btn-primary" name="incoming" type="submit" value="{{ transition.0 }}"> {{transition.1}} </button>
+                    {% endfor %}
+                    <input type="hidden" name="contract" value="{{contract.id}}" />
+                </form>
             </td>
         </tr>
     {% endfor %}

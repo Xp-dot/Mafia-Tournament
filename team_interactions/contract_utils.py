@@ -10,8 +10,8 @@ def accept_contract(contract_query, contract_id, new_value):
     #Отклоняем все контракты, которые имеют статус "Рассматривается"
     all_players_contract = Contract.objects.filter(player=player.user)
     for player_contract in all_players_contract.exclude(id=contract_id):
-        if player_contract.contract_status == 1:
-            player_contract.change_status(3)
+        if player_contract.contract_status in (1,2):
+            player_contract.change_status(4)
 
 def dismiss_contract(contract_query, contract_id, new_value):
     contract = contract_query.filter(id=contract_id).first()
@@ -25,14 +25,15 @@ def dismiss_contract(contract_query, contract_id, new_value):
 def process_income_contract_request(request, income_contracts):
     new_value = request.POST.get('incoming')
     contract_id = request.POST.get('contract')
-    if new_value == '2':
+    if new_value == '3':
         accept_contract(income_contracts, contract_id, new_value)
-    elif new_value == '5':
-        dismiss_contract(income_contracts, contract_id, new_value)
     else:
         income_contracts.filter(id=contract_id).update(contract_status=new_value)
 
 def process_outcome_contract_request(request, outcome_contracts):
     contract_id = request.POST.get('contract')
     new_value = request.POST.get('outgoing')
-    outcome_contracts.filter(id=contract_id).update(contract_status=new_value)
+    if new_value == '3':
+        accept_contract(outcome_contracts, contract_id, new_value)
+    else:
+        outcome_contracts.filter(id=contract_id).update(contract_status=new_value)

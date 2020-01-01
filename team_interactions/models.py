@@ -19,7 +19,8 @@ class Team(models.Model):
         return self.name
 
 class Contract(models.Model):
-    status_choices = ((1, 'Рассматривается'), (2, "Принят"), (3, "Отклонен"), (4, "Изменен"), (5, "Расторгнут"))
+    status_choices = ((1, 'Рассматривается игроком'), (2, 'Рассматривается владельцем'), (3, "Принят"), (4, "Отклонен"), (5, "Запрос на расторжение владельцем"),
+                      (6, "Запрос на расторжение игроком"), (7, 'Расторгнут'))
     player = models.ForeignKey(User, on_delete=models.CASCADE, related_name='contract_player')
     team_owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='contract_team_owner')
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
@@ -34,4 +35,19 @@ class Contract(models.Model):
     def change_status(self, new_status):
         self.contract_status = new_status
         self.save()
-        pass
+
+    def get_income_transitions(self):
+        if self.contract_status == 1:
+            return [(4,'Отклонить')]
+        elif self.contract_status == 2:
+            return [(3,'Принять'), (4,'Отклонить')]
+        elif self.contract_status == 3:
+            return [(5,'Расторгнуть(влд)')]
+
+    def get_outcome_transitions(self):
+        if self.contract_status == 1:
+            return [(3,'Принять'), (4,'Отклонить')]
+        elif self.contract_status == 2:
+            return [(4,'Отклонить')]
+        elif self.contract_status == 3:
+            return [(6,'Расторгнуть(игр)')]
