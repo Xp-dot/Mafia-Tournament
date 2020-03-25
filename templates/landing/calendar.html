@@ -48,7 +48,8 @@ $(document).ready(function() {
 					title: '{{ tnm.name }}',
 					start: '{{tnm.start_date|date:'Y-m-d' }}',
 					end: '{{tnm.end_date|date:'Y-m-d'}}',
-                    color: '{{ tnm.color_in_calendar }}' // override!
+                    color: '{{ tnm.color_in_calendar }}',
+                    url: '{% url 'tournament' tnm.id %}',
 				},
             {% endfor %}
 
