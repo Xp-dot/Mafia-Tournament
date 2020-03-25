@@ -4,6 +4,22 @@
 {% endblock %}
 
 {% block content %}
-        <h3>{{ tournament.name }}</h3>
+<div class="row">
+        <div class="col-2" style="margin: 10px;">
+            <img src="{{ tournament.preview_image.url }}" alt="{{ tournament.preview_image.url }}"/><br>
+        </div>
+        <div class="col-7">
+        <div>
+            <h4> Начало : {{tournament.start_date|date:'d E Y' }}</h4>
+            <h4> Конец : {{tournament.end_date|date:'d E Y'}} </h4>
+        </div>
+            <br>
         <p> {{ tournament.description|safe }}</p>
+        </div>
+        <div class="col-3">
+
+        </div>
+
+</div>
+
 {% endblock %}
