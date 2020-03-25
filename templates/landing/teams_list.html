@@ -4,6 +4,7 @@
 {% endblock %}
 
 {% block content %}
+<div class="table-responsive">
     <table class="table table-striped">
     <thead>
         <tr>
@@ -13,6 +14,7 @@
             <th>Дата создания</th>
             <th>Кубки</th>
             <th>Состав</th>
+            <th>Рыночная стоимость</th>
             <th>Подать заявку</th>
         </tr>
     </thead>
@@ -30,6 +32,7 @@
                 {% endfor %}
             {% endif %}
             </td>
+            <td> {{ team.team_value}} </td>
             <td>
               {% if user.is_authenticated and not user.userprofile.in_team and user.userprofile.access <= team.league %}
                 <form action="{% url 'contract' %}" method="post">
@@ -45,4 +48,5 @@
         </tr>
     {% endfor %}
     </table>
+    </div>
 {% endblock %}

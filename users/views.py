@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm
+from .models import UserProfile
 from team_interactions.contract_utils import *
 
 # Create your views here.
@@ -22,7 +23,14 @@ def profile(request):
 
 @login_required
 def team_management(request):
-    return render(request, 'users/profile_my_owned_teams.html')
+    if request.user.is_authenticated:
+        my_teams = Team.objects.filter(owner=request.user)
+        if request.method == 'POST':
+            usr = request.POST.get('player')
+            usr_obj = UserProfile.objects.filter(user=usr)[:1].get()
+            usr_obj.change_reserve_state()
+        context = {'my_teams': my_teams}
+    return render(request, 'users/profile_my_owned_teams.html', context)
 
 @login_required
 def my_contracts(request):
@@ -38,4 +46,8 @@ def my_contracts(request):
 
 @login_required
 def my_team(request):
-    return render(request, 'users/profile_my_team.html')
+    if request.user.is_authenticated:
+        player = UserProfile.objects.filter(user=request.user)[:1].get()
+        players_in_team = UserProfile.objects.filter(team=player.team)
+        context = {'team':player.team,'players_in_team': players_in_team}
+    return render(request, 'users/profile_my_team.html', context)

@@ -3,4 +3,23 @@
     Моя команда
 {% endblock %}
 {% block content %}
+<div class="table-responsive">
+<table class="table table-striped">
+    <thead>
+        <tr>  <td colspan="100%" style="text-align: center; background-color: cornflowerblue"> Состав команды "{{team}}"</td>  </tr>
+        <tr>
+            <th>Игрок</th>
+            <th >Активен <i title="Игрок в основном составе" class="fa fa-info-circle"></i></th>
+            <th>Допуск</th>
+        </tr>
+    </thead>
+    {% for player in players_in_team %}
+        <tr>
+            <td> {{player.user.username}} </td>
+            <td > {{player.in_reserve|yesno:"Нет,Да"}} </td>
+            <td> {{player.access}} </td>
+        </tr>
+    {% endfor %}
+    </table>
+</div>
 {% endblock %}

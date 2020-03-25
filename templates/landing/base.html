@@ -58,11 +58,11 @@
                   Профиль
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="{% url 'profile' %}">Профиль</a>
-                  <div class="dropdown-divider"></div>
+                 {% comment %} <a class="dropdown-item" href="{% url 'profile' %}">Профиль</a> {% endcomment %}
                   <a class="dropdown-item" href="{% url 'team_management' %}">Управление командами</a>
                   <a class="dropdown-item" href="{% url 'my_team' %}">Моя команда</a>
                   <a class="dropdown-item" href="{% url 'my_contracts' %}">Мои контракты</a>
+                  <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="{% url 'logout' %}">Выход</a>
                 </div>
             </li>

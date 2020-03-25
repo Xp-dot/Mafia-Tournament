@@ -4,71 +4,31 @@
 {% endblock %}
 
 {% block content %}
-
+<div class="table-responsive">
 <table id="sostav" class="table table-striped">
 <thead>
 <tr>
-<th width="33%">Ник</th>
-<th width="33%">Отдел</th>
+<th >Ник</th>
+<th >Отдел</th>
 <th>Комментарий</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td><span class="mafnick">Eternity</span></td>
-    <td><span class="tm-trophy tm-trophy-gold"><i class="fa fa-trophy"></i></span>  Организационный отдел</td>
-<td>Руководитель Турнирных мастеров</td>
-</tr>
-<tr>
-<td><span class="mafnick">Kallocain</span></td>
-<td><span class="tm-trophy tm-trophy-gold"><i class="fa fa-trophy"></i></span> Организационный отдел</td>
-<td></td>
-</tr>
-<tr>
-<td><span class="mafnick">Asmodeus</span></td>
-<td><span class="tm-trophy tm-trophy-silver"><i class="fa fa-trophy"></i></span> Спортивный отдел</td>
-<td></td>
-</tr>
-<tr>
-<td><span class="mafnick">Bazinga</span></td>
-<td><span class="tm-trophy tm-trophy-silver"><i class="fa fa-trophy"></i></span> Спортивный отдел</td>
-<td></td>
-</tr>
-<tr>
-<td><span class="mafnick">Psheno</span></td>
-<td><span class="tm-trophy tm-trophy-silver"><i class="fa fa-trophy"></i></span> Спортивный отдел</td>
-<td></td>
-</tr>
-<tr>
-<td><span class="mafnick">Moonlight</span></td>
-<td><span class="tm-trophy tm-trophy-silver"><i class="fa fa-trophy"></i></span> Спортивный отдел</td>
-<td></td>
-</tr>
-<tr>
-<td><span class="mafnick">Evansolia</span></td>
-<td><span class="tm-trophy tm-trophy-silver"><i class="fa fa-trophy"></i></span> Спортивный отдел</td>
-<td></td>
-</tr>
-<tr>
-<td><span class="mafnick">Mercury</span></td>
-<td><span class="tm-trophy tm-trophy-silver"><i class="fa fa-trophy"></i></span> Спортивный отдел</td>
-<td></td>
-</tr>
-<tr>
-<td><span class="mafnick">Легендарный</span></td>
-<td>Судья</td>
-<td>Лицензия до 20.07.2019</td>
-</tr>
-<tr>
-<td><span class="mafnick">Moody</span></td>
-<td>Судья</td>
-<td>Лицензия до 14.01.2020</td>
-</tr>
-<tr>
-<td><span class="mafnick">takotorayaeva</span></td>
-<td>Судья</td>
-<td>Лицензия до 24.06.2020</td>
-</tr>
+    {% for tm in tms %}
+    <tr>
+        <td>{{tm.user.username}}</td>
+        <td>
+            {% if tm.cups == 1%}
+                <span class="tm-trophy tm-trophy-gold"><i class="fa fa-trophy"></i></span>
+            {% elif tm.cups == 2%}
+                <span class="tm-trophy tm-trophy-silver"><i class="fa fa-trophy"></i></span>
+            {% endif%}
+            {{tm.status}}
+        </td>
+        <td>{{tm.comment}}</td>
+    </tr>
+    {% endfor %}
 </tbody>
 </table>
+</div>
 {% endblock %}

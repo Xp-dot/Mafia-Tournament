@@ -1,8 +1,60 @@
 {% extends 'landing/base.html' %}
+{% load static %}
+{% block scripts %}
+	<link rel="stylesheet" type="text/css" href="{% static 'evo-calendar.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/locale/ru.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css"></script>
+
+	<script src="{% static 'js/evo-calendar.js' %}"></script>
+{% endblock %}
 
 {% block title %}
  Календарь Турниров
 {% endblock %}
 
 {% block content %}
+<div class="ui container">
+    <div class="ui container">
+      <div class="ui grid">
+        <div class="ui sixteen column">
+          <div id="calendar"></div>
+        </div>
+      </div>
+    </div>
+
+</div>
+
+<script>
+var calHeight = 1000;
+$(document).ready(function() {
+
+		$('#calendar').fullCalendar({
+			header: {
+				left: 'prev,next today',
+				center: 'title',
+				right: 'month,basicWeek,basicDay'
+			},
+			lang: 'ru',
+			height: 'auto',
+			defaultDate: '{% now 'Y-m-d' %}',
+			navLinks: true, // can click day/week names to navigate views
+			events: [
+			{% for tnm in tournaments %}
+				{
+					title: '{{ tnm.name }}',
+					start: '{{tnm.start_date|date:'Y-m-d' }}',
+					end: '{{tnm.end_date|date:'Y-m-d'}}',
+                    color: '{{ tnm.color_in_calendar }}' // override!
+				},
+            {% endfor %}
+
+			]
+		});
+
+	});
+</script>
 {% endblock %}

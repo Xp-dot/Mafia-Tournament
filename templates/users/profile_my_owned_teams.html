@@ -3,4 +3,44 @@
     Управление моими командами
 {% endblock %}
 {% block content %}
+<div class="table-responsive">
+<table class="table table-striped">
+    <thead>
+        <tr>  <td colspan="100%" style="text-align: center; background-color: cornflowerblue"> Команды под моим управлением</td>  </tr>
+        <tr>
+            <th>Команда</th>
+            <th>Лига</th>
+            <th>Команда может играть</th>
+            <th>Состав(Активен)</th>
+        </tr>
+    </thead>
+    {% for team in my_teams %}
+        <tr>
+            <td> {{team.name}} </td>
+            <td> {{team.league}} </td>
+            <td> {{team.can_play|yesno:"Да,Нет"}} </td>
+            <td>
+                {% if team.userprofile_set.all %}
+                    {% for usr in team.userprofile_set.all %}
+                        <form style='float:left;' method="post">
+                            {{ usr.user.username }}
+                            {% csrf_token %}
+                            <button class="btn btn-primary" type="submit" title="{{usr.in_reserve|yesno:'Нажмите чтобы перевести в основной состав,Нажмите чтобы перевести в резерв'}}">
+                                {% if usr.in_reserve%}
+                                <span><i class="fa fa-toggle-off"></i></span>
+                                {% else %}
+                                <span><i class="fa fa-toggle-on"></i></span>
+                                {% endif %}
+                            </button>
+                            <input type="hidden" name="player" value="{{usr.user.id}}" />
+                        <span> &nbsp; </span>
+                        </form>
+                    {% endfor %}
+                {% endif %}
+            </td>
+
+        </tr>
+    {% endfor %}
+    </table>
+</div>
 {% endblock %}

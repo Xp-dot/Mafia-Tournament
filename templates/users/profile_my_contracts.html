@@ -1,8 +1,34 @@
 {% extends 'landing/base.html' %}
+
 {% block title %}
     Мои контракты
+<style>
+.overlay {
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 2;
+  cursor: pointer;
+}
+
+.reason{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  color: white;
+  transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+}
+</style>
 {% endblock %}
 {% block content %}
+<div class="table-responsive">
     <table class="table table-striped">
     <thead>
         <tr>  <td colspan="100%" style="text-align: center; background-color: cornflowerblue"> Ваши заявки на прием в команду </td>  </tr>
@@ -30,7 +56,19 @@
                 <form method="post">
                     {% csrf_token %}
                     {% for transition in contract.get_outcome_transitions %}
-                        <button class="btn btn-primary" name="outgoing" type="submit" value="{{ transition.0 }}"> {{transition.1}} </button>
+                    {% if transition.0 == 6%}
+                        <button class="btn btn-primary" type="button" onclick="on( 'o_{{forloop.counter}}' )"> {{transition.1}} </button>
+                        <div class="overlay" id="o_{{forloop.counter}}">
+                            <div class="reason">
+                                Введите причину разрыва(строчку оплаты неустойки):<br>
+                                <input type="text" name="reason" value="">
+                                <button class="btn btn-primary" name="outgoing" type="submit" value="{{transition.0}}"> Подтвердить </button>
+                            </div>
+                        </div>
+                    {% else %}
+                        <button class="btn btn-primary" name="outgoing" type="submit" value="{{transition.0}}"> {{transition.1}} </button>
+                    {% endif %}
+
                     {% endfor %}
                     <input type="hidden" name="contract" value="{{contract.id}}" />
                 </form>
@@ -38,6 +76,8 @@
         </tr>
     {% endfor %}
     </table>
+</div>
+<div class="table-responsive">
     <table class="table table-striped">
     <thead>
         <tr>  <td colspan="100%" style="text-align: center; background-color: cornflowerblue"> Заявки на прием в вашу команду </td>  </tr>
@@ -65,7 +105,19 @@
                 <form method="post">
                     {% csrf_token %}
                     {% for transition in contract.get_income_transitions %}
-                        <button class="btn btn-primary" name="incoming" type="submit" value="{{ transition.0 }}"> {{transition.1}} </button>
+                    {% if transition.0 == 5%}
+                        <button class="btn btn-primary" type="button" onclick="on( 'i_{{forloop.counter}}' )"> {{transition.1}} </button>
+                        <div class="overlay" id="i_{{forloop.counter}}">
+                            <div class="reason">
+                                Введите причину разрыва(строчку оплаты неустойки):<br>
+                                <input type="text" name="reason" value="">
+                                <button class="btn btn-primary" name="incoming" type="submit" value="{{ transition.0 }}"> Подтвердить </button>
+                            </div>
+                        </div>
+                    {% else %}
+                        <button class="btn btn-primary" name="incoming" type="submit" value="{{ transition.0 }}" > {{transition.1}} </button>
+                    {% endif %}
+
                     {% endfor %}
                     <input type="hidden" name="contract" value="{{contract.id}}" />
                 </form>
@@ -73,4 +125,13 @@
         </tr>
     {% endfor %}
     </table>
+</div>
+
+<script type="text/javascript">
+ function on(x) {
+ console.log(x);
+  document.getElementById(x).style.display = "block";
+}
+
+</script>
 {% endblock %}

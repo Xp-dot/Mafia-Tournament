@@ -1,7 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Tournament
+from django.contrib.auth.models import User
 from team_interactions.models import Team
-from users.models import UserProfile
+from users.models import UserProfile, TMProfile
 
 # Create your views here.
 def landing(request):
@@ -19,12 +20,12 @@ def show_tournament(request, tournament_id):
 
 def calendar(request, year, month):
     tournaments = Tournament.objects.all()
-    m_range = {'year': year, 'month':month}
-    return render(request, "landing/calendar.html", {"m_range":m_range})
+    return render(request, "landing/calendar.html", {"tournaments": tournaments})
 
 
 def rooster(request):
-    return render(request, "landing/rooster.html", locals())
+    tms = TMProfile.objects.all()
+    return render(request, "landing/rooster.html", {"tms":tms})
 
 
 def fp(request):
